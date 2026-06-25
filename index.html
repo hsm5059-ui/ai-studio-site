@@ -1,784 +1,797 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>[스튜디오명] · AI Content Creative Studio</title>
-<meta name="description" content="진짜 실력자가 AI를 만날 때, 불가능이 사라집니다. AI 교육 · 바이브코딩 · 영상 제작 스튜디오" />
-
-<!-- ▼▼ 웹폰트(인터넷 연결 시에만 적용, 없어도 시스템 폰트로 정상 동작) ▼▼ -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>노바 스튜디오 — AI Content Creative Studio</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
-/* =====================================================================
-   [수정 포인트 ①] 색상 / 테마 변수  — 여기 한 곳만 바꾸면 전체 톤이 바뀝니다
-   ===================================================================== */
+/* ============================================================
+   ▼▼▼ [수정 포인트 ①] 색상/테마 — 포인트 컬러는 여기 한 줄만 바꾸면 전체 적용
+   ============================================================ */
 :root{
-  --accent:        #f5b301;   /* ★ 포인트 컬러 (시안으로 되돌리려면 #00e0c0) */
-  --accent-soft:   rgba(245,179,1,.14);
-  --accent-line:   rgba(245,179,1,.30);
-
-  --bg:            #0a0a0a;    /* 배경(거의 검정) */
-  --bg-2:          #111316;    /* 카드 배경 */
-  --bg-3:          #16191d;    /* 더 밝은 카드 */
-  --line:          rgba(255,255,255,.09);
-  --line-2:        rgba(255,255,255,.16);
-
-  --text:          #f2f4f5;    /* 본문 흰색 */
-  --text-mute:     #9aa1a8;    /* 회색 */
-  --text-dim:      #6b7178;    /* 더 흐린 회색 */
-
-  --radius:        16px;
-  --maxw:          1200px;
-  --nav-h:         68px;
-
-  --blueprint:     rgba(245,179,1,.16); /* 블루프린트 선 색 */
-  --font: "Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,
-          "Segoe UI",Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --accent:#00e0c0;          /* 포인트 컬러 (시안). 앰버 원하면 #f5b301 로 변경 */
+  --accent-soft:rgba(0,224,192,.12);
+  --bg:#0a0a0a;
+  --bg-2:#111315;
+  --bg-card:#141719;
+  --line:rgba(255,255,255,.08);
+  --text:#f2f4f5;
+  --muted:#8b9296;
+  --muted-2:#5c6266;
+  --radius:16px;
+  --maxw:1180px;
+  --font:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,system-ui,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
 body{
   font-family:var(--font);
   background:var(--bg);
   color:var(--text);
-  line-height:1.65;
+  line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
-section{position:relative}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-
-/* ---- 공통 타이포 ---- */
-.eyebrow{
-  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);font-weight:600;
+/* ---------- 공통 섹션 ---------- */
+section{position:relative;padding:110px 0}
+.sec-label{
+  font-size:13px;letter-spacing:.18em;color:var(--accent);
+  font-weight:600;text-transform:uppercase;margin-bottom:14px;
   display:inline-flex;align-items:center;gap:10px;
 }
-.eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
-.sec-label{
-  font-size:13px;letter-spacing:.16em;color:var(--text-dim);
-  font-variant-numeric:tabular-nums;margin-bottom:14px;font-weight:600;
-}
-h1,h2,h3{line-height:1.18;font-weight:800;letter-spacing:-.02em}
-.sec-title{font-size:clamp(28px,4.4vw,46px);margin:6px 0 18px}
-.lead{color:var(--text-mute);font-size:clamp(15px,1.6vw,18px);max-width:680px}
+.sec-label::before{content:"";width:28px;height:1px;background:var(--accent);display:inline-block}
+.sec-title{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sec-desc{color:var(--muted);margin-top:16px;max-width:640px}
 
-/* ---- 버튼 ---- */
+/* ---------- 버튼 ---------- */
 .btn{
   display:inline-flex;align-items:center;gap:8px;
-  padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;
-  border:1px solid var(--line-2);background:transparent;color:var(--text);
-  cursor:pointer;transition:.22s;white-space:nowrap;
+  padding:13px 24px;border-radius:50px;font-weight:600;font-size:15px;
+  border:1px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap;
 }
-.btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.btn--accent{background:var(--accent);color:#03110f;border-color:var(--accent)}
-.btn--accent:hover{filter:brightness(1.08);color:#03110f;box-shadow:0 10px 30px var(--accent-soft)}
-.btn--sm{padding:9px 16px;font-size:13px}
+.btn-primary{background:var(--accent);color:#06201c}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-/* =====================================================================
-   내비게이션 (스크롤 고정)
-   ===================================================================== */
-header.nav{
-  position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:100;
-  display:flex;align-items:center;
-  background:rgba(10,10,10,.55);backdrop-filter:blur(14px);
-  border-bottom:1px solid transparent;transition:.3s;
-}
-header.nav.scrolled{background:rgba(10,10,10,.86);border-bottom-color:var(--line)}
-.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%;
-  display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-weight:800;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
-.logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
-.nav-menu{display:flex;align-items:center;gap:28px}
-.nav-menu a{color:var(--text-mute);font-size:15px;font-weight:500;transition:.2s;position:relative}
-.nav-menu a:hover{color:var(--text)}
-.nav-actions{display:flex;align-items:center;gap:12px}
-.hamburger{display:none;background:none;border:none;color:var(--text);font-size:26px;cursor:pointer;line-height:1}
-
-/* 모바일 메뉴 */
-.mobile-menu{
-  position:fixed;inset:var(--nav-h) 0 auto 0;z-index:99;
-  background:rgba(10,10,10,.98);backdrop-filter:blur(14px);
+/* ============================================================
+   내비게이션
+   ============================================================ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.72);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
-  transform:translateY(-120%);transition:.35s cubic-bezier(.4,0,.2,1);
 }
-.mobile-menu.open{transform:translateY(0)}
-.mobile-menu a{display:block;padding:16px 24px;border-bottom:1px solid var(--line);
-  color:var(--text-mute);font-size:17px}
-.mobile-menu a:last-child{border-bottom:none}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.02em}
+.logo b{color:var(--accent)}
+.nav-menu{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-menu a{font-size:15px;color:var(--muted);transition:.2s;font-weight:500;position:relative}
+.nav-menu a:hover{color:var(--text)}
+.nav-menu a.active{color:var(--text)}
+.nav-menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);border-radius:2px}
+nav.scrolled{background:rgba(10,10,10,.9);box-shadow:0 8px 30px rgba(0,0,0,.45)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{width:24px;height:2px;background:var(--text);transition:.3s}
 
-/* =====================================================================
-   히어로
-   ===================================================================== */
-#hero{min-height:100vh;display:flex;align-items:center;padding-top:var(--nav-h);overflow:hidden}
-.blueprint{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.9}
+/* ============================================================
+   히어로 + 블루프린트 모티프
+   ============================================================ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding-top:100px;padding-bottom:60px;overflow:hidden;
+}
+#hero::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  width:680px;height:680px;right:-120px;top:-80px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-soft),transparent 65%);
+  filter:blur(30px);
+}
+.blueprint{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.5;color:var(--accent);
+}
 .blueprint svg{width:100%;height:100%}
-.bp-grid{position:absolute;inset:0;
+.bp-rotate{animation:bpspin 90s linear infinite;transform-origin:center}
+@keyframes bpspin{to{transform:rotate(360deg)}}
+.bp-grid{
+  position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.4;
   background-image:
-    linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:48px 48px;mask-image:radial-gradient(120% 80% at 70% 30%,#000 30%,transparent 75%);
-  -webkit-mask-image:radial-gradient(120% 80% at 70% 30%,#000 30%,transparent 75%);
-  opacity:.5}
-@keyframes spinSlow{to{transform:rotate(360deg)}}
-@keyframes dashMove{to{stroke-dashoffset:-400}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.bp-rotor{transform-origin:center;animation:spinSlow 90s linear infinite}
-.bp-dash{stroke-dasharray:8 10;animation:dashMove 24s linear infinite}
-
-.hero-inner{position:relative;z-index:2;width:100%}
-.hero-inner .eyebrow{margin-bottom:22px}
-.hero-title{font-size:clamp(44px,9vw,104px);line-height:.98;margin:6px 0 22px;letter-spacing:-.03em}
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(circle at 60% 40%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(circle at 60% 40%,#000 0%,transparent 75%);
+}
+.hero-inner{position:relative;z-index:2;max-width:780px}
+.hero-label{
+  display:inline-block;font-size:13px;letter-spacing:.22em;color:var(--accent);
+  border:1px solid var(--accent);padding:7px 16px;border-radius:50px;
+  text-transform:uppercase;font-weight:600;margin-bottom:26px;
+}
+.hero-title{font-size:clamp(44px,8vw,86px);font-weight:800;line-height:1.02;letter-spacing:-.03em}
 .hero-title .accent{color:var(--accent)}
-.hero-desc{color:var(--text-mute);font-size:clamp(16px,2vw,21px);max-width:600px;margin-bottom:34px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-sub{font-size:clamp(16px,2.4vw,21px);color:var(--muted);margin-top:24px;max-width:560px;line-height:1.7}
+.hero-btns{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
 
-.counters{display:flex;gap:48px;flex-wrap:wrap;margin-top:64px}
-.counter .num{font-size:clamp(34px,5vw,52px);font-weight:800;color:var(--accent);
-  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.counter .lbl{color:var(--text-mute);font-size:14px;margin-top:2px}
+/* 카운터 */
+.counters{display:flex;gap:48px;margin-top:64px;flex-wrap:wrap}
+.counter .num{font-size:clamp(32px,5vw,52px);font-weight:800;color:var(--accent);letter-spacing:-.02em;line-height:1}
+.counter .lab{color:var(--muted);font-size:14px;margin-top:8px;letter-spacing:.02em}
 
-.scroll-ind{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;
-  font-size:11px;letter-spacing:.3em;color:var(--text-dim);text-align:center}
-.scroll-ind .bar{width:1px;height:36px;background:linear-gradient(var(--text-dim),transparent);
-  margin:8px auto 0;animation:scrollBlink 1.8s ease-in-out infinite}
-@keyframes scrollBlink{0%,100%{opacity:.2}50%{opacity:1}}
-
-/* =====================================================================
-   섹션 공통 패딩
-   ===================================================================== */
-.section{padding:110px 0;border-top:1px solid var(--line)}
-.section-head{margin-bottom:54px}
-
-/* ---- 태그 알약 ---- */
-.tags{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}
-.tag{padding:8px 16px;border:1px solid var(--line-2);border-radius:999px;
-  font-size:14px;color:var(--text-mute);transition:.2s}
-.tag:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ---- 인용구 박스 ---- */
-.quote{
-  border-left:3px solid var(--accent);padding:20px 26px;background:var(--bg-2);
-  border-radius:0 var(--radius) var(--radius) 0;margin:8px 0 28px;
-  font-size:clamp(17px,2.2vw,22px);font-weight:600;line-height:1.5;
+.scroll-ind{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:3;font-size:11px;letter-spacing:.3em;color:var(--muted);
+  text-align:center;animation:blink 1.8s ease-in-out infinite;
 }
-.quote span{color:var(--accent)}
+.scroll-ind span{display:block;font-size:18px;margin-top:6px}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* ---- 카드 그리드 공통 ---- */
-.grid{display:grid;gap:18px}
-.g-4{grid-template-columns:repeat(4,1fr)}
-.g-3{grid-template-columns:repeat(3,1fr)}
-.g-2{grid-template-columns:repeat(2,1fr)}
-
-.card{
-  background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);
-  padding:26px;transition:.25s;position:relative;overflow:hidden;
-}
-.card:hover{border-color:var(--accent-line);transform:translateY(-4px);
-  box-shadow:0 18px 44px rgba(0,0,0,.5)}
-.card .idx{font-size:13px;color:var(--accent);font-weight:700;letter-spacing:.05em}
-.card h3{font-size:19px;margin:14px 0 8px}
-.card p{color:var(--text-mute);font-size:14.5px}
-.card .emoji{font-size:30px;display:block;margin-bottom:8px}
-
-/* ---- 비전 블록 ---- */
-.vision{margin-top:60px;background:var(--bg-2);border:1px solid var(--line);
-  border-radius:var(--radius);padding:44px;
-  display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
-.vision h3{font-size:clamp(24px,3.4vw,38px);line-height:1.25}
-.vision h3 span{color:var(--accent)}
-.vision-list{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.vision-list .vi .ti{font-weight:700;font-size:16px;margin:6px 0 2px}
-.vision-list .vi .de{color:var(--text-mute);font-size:13.5px}
-.vision-list .vi .em{font-size:24px}
-
-/* ---- 강의 카드 ---- */
-.lec-card{display:flex;flex-direction:column;height:100%}
-.badge{display:inline-block;align-self:flex-start;font-size:12px;font-weight:700;
-  padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
-  letter-spacing:.03em;margin-bottom:14px}
-.checklist{list-style:none;margin:14px 0 18px;display:grid;gap:8px}
-.checklist li{font-size:14px;color:var(--text-mute);padding-left:24px;position:relative}
-.checklist li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
-.card-link{color:var(--accent);font-weight:700;font-size:14px;margin-top:auto;display:inline-flex;gap:5px}
-.card-link:hover{gap:9px}
-
-/* ---- 모집중 강조 카드 ---- */
-.recruit{
-  background:linear-gradient(135deg,var(--accent-soft),transparent 60%),var(--bg-3);
-  border:1px solid var(--accent-line);border-radius:var(--radius);
-  padding:34px;display:grid;grid-template-columns:1.3fr 1fr;gap:34px;align-items:center;
-  margin-bottom:40px;position:relative;overflow:hidden;
-}
-.recruit::after{content:"NOW";position:absolute;top:-10px;right:24px;font-size:80px;
-  font-weight:900;color:var(--accent);opacity:.06;letter-spacing:-.04em}
-.recruit .pill{display:inline-block;background:var(--accent);color:#03110f;font-weight:800;
-  font-size:12px;padding:5px 12px;border-radius:999px;letter-spacing:.05em;margin-bottom:14px}
-.recruit h3{font-size:clamp(22px,3vw,30px);margin-bottom:10px}
-.recruit .meta{display:grid;gap:10px;margin-top:6px}
-.recruit .meta div{display:flex;gap:10px;color:var(--text-mute);font-size:15px}
-.recruit .meta b{color:var(--text);min-width:54px;font-weight:600}
-
-/* ---- 일정 표 ---- */
-.table-wrap{margin-top:40px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.table-scroll{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:720px}
-th,td{padding:15px 18px;text-align:left;font-size:14.5px;border-bottom:1px solid var(--line)}
-th{background:var(--bg-2);color:var(--text-mute);font-weight:600;font-size:13px;
-  letter-spacing:.04em;text-transform:uppercase}
-tbody tr:hover{background:var(--bg-2)}
-tbody tr:last-child td{border-bottom:none}
-.st{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
-.st.open{background:var(--accent);color:#03110f}
-.st.soon{background:rgba(255,255,255,.08);color:var(--text-mute)}
-.st.done{background:transparent;color:var(--text-dim);border:1px solid var(--line)}
-td .q{color:var(--accent);font-weight:600}
-
-/* ---- 바이브코딩 앱 카드 ---- */
-.app-card{display:block}
-.app-card .emoji{font-size:34px}
-.app-tags{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
-.app-tags span{font-size:11.5px;color:var(--text-dim);border:1px solid var(--line);
-  padding:3px 9px;border-radius:999px}
-
-/* ---- GPTs & Gems ---- */
-.gg{display:grid;grid-template-columns:1fr 1fr;gap:30px}
-.gg-col h3{font-size:22px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.gg-col .sub{color:var(--text-mute);font-size:14px;margin-bottom:20px}
-.gg-list{display:grid;gap:12px}
-.gg-item{display:flex;gap:14px;align-items:flex-start;background:var(--bg-2);
-  border:1px solid var(--line);border-radius:12px;padding:16px 18px;transition:.2s}
-.gg-item:hover{border-color:var(--accent-line)}
-.gg-item .em{font-size:26px;flex-shrink:0}
-.gg-item .ti{font-weight:700;font-size:15.5px}
-.gg-item .de{color:var(--text-mute);font-size:13.5px}
-.gg-item .go{margin-left:auto;flex-shrink:0;align-self:center}
-.mini{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;white-space:nowrap}
-.mini.link{background:var(--accent-soft);color:var(--accent)}
-.mini.only{background:rgba(255,255,255,.07);color:var(--text-mute)}
-.gg-note{margin-top:30px;background:var(--bg-2);border:1px dashed var(--line-2);
-  border-radius:var(--radius);padding:26px;display:flex;align-items:center;
-  justify-content:space-between;gap:20px;flex-wrap:wrap}
-.gg-note .t{font-weight:700;font-size:17px}
-.gg-note .d{color:var(--text-mute);font-size:14px}
-
-/* ---- Contact ---- */
-.contact{display:grid;grid-template-columns:.85fr 1.15fr;gap:30px}
-.info-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
-.info-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
-.info-row:last-of-type{border-bottom:none}
-.info-row .em{font-size:22px}
-.info-row .k{font-size:12px;color:var(--text-dim);letter-spacing:.05em}
-.info-row .v{font-size:15.5px;font-weight:600}
-.form{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
-.field{margin-bottom:16px}
-.field label{display:block;font-size:13.5px;color:var(--text-mute);margin-bottom:7px;font-weight:500}
-.field label .req{color:var(--accent)}
-.field input,.field select,.field textarea{
-  width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:10px;
-  padding:12px 14px;color:var(--text);font-size:15px;font-family:inherit;transition:.2s}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
-.field textarea{resize:vertical;min-height:120px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-/* ---- 푸터 ---- */
-footer{border-top:1px solid var(--line);padding:60px 0 34px;background:var(--bg-2)}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px}
-.foot-brand .logo{margin-bottom:14px}
-.foot-brand p{color:var(--text-mute);font-size:14px;max-width:300px}
-.foot-brand .meta{color:var(--text-dim);font-size:13px;margin-top:16px;line-height:1.9}
-.foot-col h4{font-size:13px;letter-spacing:.08em;color:var(--text-dim);text-transform:uppercase;margin-bottom:16px}
-.foot-col a{display:block;color:var(--text-mute);font-size:14.5px;padding:5px 0;transition:.2s}
-.foot-col a:hover{color:var(--accent)}
-.foot-bottom{border-top:1px solid var(--line);padding-top:24px;color:var(--text-dim);
-  font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-
-/* =====================================================================
+/* ============================================================
    fade-up 애니메이션
-   ===================================================================== */
-.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+   ============================================================ */
+.fade-up{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
 .fade-up.in{opacity:1;transform:none}
 
-/* =====================================================================
-   반응형
-   ===================================================================== */
-@media(max-width:980px){
-  .g-4{grid-template-columns:repeat(2,1fr)}
-  .g-3{grid-template-columns:repeat(2,1fr)}
-  .vision{grid-template-columns:1fr;gap:28px}
-  .recruit{grid-template-columns:1fr}
-  .gg{grid-template-columns:1fr}
-  .contact{grid-template-columns:1fr}
-  .foot-grid{grid-template-columns:1fr 1fr}
+/* ============================================================
+   01 Studio / 소개
+   ============================================================ */
+#about{background:var(--bg-2)}
+.quote-box{
+  border-left:3px solid var(--accent);padding:20px 26px;margin:34px 0;
+  background:var(--accent-soft);border-radius:0 12px 12px 0;
+  font-size:clamp(18px,2.6vw,24px);font-weight:600;line-height:1.5;
 }
-@media(max-width:640px){
-  .nav-menu,.nav-actions .btn{display:none}
-  .hamburger{display:block}
-  .section{padding:80px 0}
-  .g-4,.g-3,.g-2{grid-template-columns:1fr}
-  .vision{padding:28px}
-  .vision-list{grid-template-columns:1fr}
-  .form-grid{grid-template-columns:1fr}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 8px}
+.tag{
+  padding:8px 16px;border-radius:50px;border:1px solid var(--line);
+  font-size:14px;color:var(--muted);transition:.2s;
+}
+.tag:hover{border-color:var(--accent);color:var(--accent)}
+
+.cards-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:50px}
+.svc-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px 24px;transition:.3s;
+}
+.svc-card:hover{transform:translateY(-6px);border-color:var(--accent)}
+.svc-card .no{color:var(--accent);font-weight:700;font-size:14px;letter-spacing:.1em}
+.svc-card h4{font-size:19px;margin:14px 0 10px;font-weight:700}
+.svc-card p{color:var(--muted);font-size:14.5px}
+
+/* 비전 */
+.vision{margin-top:70px;padding:46px;border-radius:var(--radius);
+  border:1px solid var(--line);background:
+  radial-gradient(120% 140% at 100% 0%,var(--accent-soft),transparent 55%),var(--bg-card);}
+.vision h3{font-size:clamp(22px,3.4vw,34px);font-weight:800;line-height:1.3;max-width:780px}
+.vision-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:36px}
+.vision-item .emo{font-size:30px}
+.vision-item h5{margin:10px 0 6px;font-size:16px;font-weight:700}
+.vision-item p{color:var(--muted);font-size:14px}
+
+/* ============================================================
+   02 Lecture / 강의
+   ============================================================ */
+.recruit-card{
+  margin-top:46px;border:1.5px solid var(--accent);border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--accent-soft),transparent);
+  padding:34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+}
+.recruit-card .rc-badge{
+  display:inline-block;background:var(--accent);color:#06201c;font-weight:700;
+  font-size:12px;padding:5px 14px;border-radius:50px;letter-spacing:.05em;margin-bottom:14px;
+}
+.recruit-card h3{font-size:24px;font-weight:800;margin-bottom:16px}
+.rc-meta{display:flex;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:14.5px}
+.rc-meta b{color:var(--text);font-weight:600}
+
+.lec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.lec-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 24px;transition:.3s;display:flex;flex-direction:column;
+}
+.lec-card:hover{transform:translateY(-5px);border-color:var(--accent)}
+.lec-badge{align-self:flex-start;font-size:12px;color:var(--accent);
+  border:1px solid var(--accent);padding:4px 12px;border-radius:50px;margin-bottom:14px;font-weight:600}
+.lec-card h4{font-size:19px;font-weight:700;margin-bottom:10px}
+.lec-card>p{color:var(--muted);font-size:14.5px;margin-bottom:16px}
+.check{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.check li{font-size:14px;color:var(--muted);display:flex;gap:9px;align-items:flex-start}
+.check li::before{content:"✓";color:var(--accent);font-weight:700}
+.lec-link{margin-top:auto;color:var(--accent);font-weight:600;font-size:14.5px}
+
+/* 강의 일정 표 */
+.sched-wrap{margin-top:56px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:15px 18px;text-align:left;font-size:14.5px;border-bottom:1px solid var(--line)}
+th{background:var(--bg-card);color:var(--muted);font-weight:600;font-size:13px;letter-spacing:.03em}
+td{color:var(--text)}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+.st-badge{display:inline-block;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:600}
+.st-open{background:var(--accent);color:#06201c}
+.st-soon{background:rgba(255,255,255,.07);color:var(--muted)}
+.st-done{background:transparent;color:var(--muted-2);border:1px solid var(--line)}
+.tbl-link{color:var(--accent);font-weight:600}
+
+/* ============================================================
+   03 Vibe Coding
+   ============================================================ */
+#vibe{background:var(--bg-2)}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:46px}
+.app-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;transition:.3s;display:block;
+}
+.app-card:hover{transform:translateY(-6px);border-color:var(--accent)}
+.app-card .emo{font-size:34px}
+.app-card h4{font-size:17px;font-weight:700;margin:14px 0 8px}
+.app-card p{color:var(--muted);font-size:14px;margin-bottom:14px;min-height:40px}
+.app-tags{display:flex;gap:7px;flex-wrap:wrap}
+.app-tags span{font-size:12px;color:var(--muted);background:rgba(255,255,255,.05);
+  padding:4px 10px;border-radius:50px}
+
+/* ============================================================
+   04 GPTs & Gems
+   ============================================================ */
+.gpts-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px}
+.gpts-col h3{font-size:21px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gpts-col>p{color:var(--muted);font-size:14px;margin-bottom:22px}
+.gpts-list{display:flex;flex-direction:column;gap:12px}
+.gpts-item{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+  padding:18px 20px;display:flex;align-items:center;gap:16px;transition:.25s;
+}
+.gpts-item:hover{border-color:var(--accent)}
+.gpts-item .emo{font-size:26px;flex-shrink:0}
+.gpts-item .gi-body{flex:1;min-width:0}
+.gpts-item h5{font-size:16px;font-weight:700;margin-bottom:3px}
+.gpts-item p{color:var(--muted);font-size:13.5px}
+.gi-badge{font-size:12px;padding:5px 13px;border-radius:50px;white-space:nowrap;font-weight:600}
+.gi-go{background:var(--accent);color:#06201c}
+.gi-lock{background:rgba(255,255,255,.07);color:var(--muted)}
+.gpts-notice{
+  margin-top:36px;text-align:center;padding:30px;border-radius:var(--radius);
+  border:1px dashed var(--line);background:var(--accent-soft);
+}
+.gpts-notice p{color:var(--muted);margin-bottom:18px}
+.gpts-notice b{color:var(--text)}
+
+/* ============================================================
+   06 Contact
+   ============================================================ */
+#contact{background:var(--bg-2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:30px;margin-top:46px}
+.contact-info{display:flex;flex-direction:column;gap:18px}
+.ci-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+  padding:24px;display:flex;gap:16px;align-items:flex-start;
+}
+.ci-card .emo{font-size:26px}
+.ci-card h5{font-size:15px;color:var(--muted);font-weight:600;margin-bottom:5px}
+.ci-card p{font-size:16px;font-weight:600}
+.kakao-btn{background:#fae100;color:#191600;justify-content:center;width:100%;margin-top:4px}
+.kakao-btn:hover{filter:brightness(1.05);transform:translateY(-2px)}
+
+form{background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:14px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.field label .req{color:var(--accent)}
+.field input,.field select,.field textarea{
+  width:100%;padding:13px 15px;background:var(--bg);border:1px solid var(--line);
+  border-radius:10px;color:var(--text);font-family:var(--font);font-size:15px;transition:.2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+.field textarea{resize:vertical;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* ============================================================
+   푸터
+   ============================================================ */
+footer{background:var(--bg);border-top:1px solid var(--line);padding:60px 0 34px}
+.foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px;margin-bottom:44px}
+.foot-brand .logo{font-size:22px;margin-bottom:14px}
+.foot-brand p{color:var(--muted);font-size:14px;max-width:320px;margin-bottom:16px}
+.foot-brand .meta{color:var(--muted-2);font-size:13px;line-height:1.9}
+.foot-col h6{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{color:var(--text);font-size:14.5px;opacity:.8;transition:.2s}
+.foot-col a:hover{opacity:1;color:var(--accent)}
+.foot-bottom{border-top:1px solid var(--line);padding-top:24px;color:var(--muted-2);font-size:13px;text-align:center}
+
+/* ============================================================
+   반응형
+   ============================================================ */
+@media(max-width:1000px){
+  .cards-4,.vision-grid,.app-grid{grid-template-columns:repeat(2,1fr)}
+  .lec-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  section{padding:80px 0}
+  .nav-menu{
+    position:fixed;top:66px;right:0;width:75%;max-width:300px;height:calc(100vh - 66px);
+    background:var(--bg-2);flex-direction:column;align-items:flex-start;gap:0;
+    padding:20px 26px;transform:translateX(100%);transition:.35s;border-left:1px solid var(--line);
+  }
+  .nav-menu.open{transform:translateX(0)}
+  .nav-menu li{width:100%}
+  .nav-menu a{display:block;padding:15px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .hamburger{display:flex}
+  .nav-cta .btn{display:none}
   .counters{gap:30px}
-  .foot-grid{grid-template-columns:1fr;gap:28px}
-  .gg-note{flex-direction:column;align-items:flex-start}
+  .cards-4,.vision-grid,.lec-grid,.app-grid,.gpts-cols,.contact-grid{grid-template-columns:1fr}
+  .recruit-card{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .vision{padding:30px 24px}
+}
+@media(max-width:430px){
+  .foot-top{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- ====================== 내비게이션 ====================== -->
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <!-- [수정 포인트 ②] 스튜디오명(로고) -->
-    <a href="#hero" class="logo"><span class="dot"></span>[스튜디오명]</a>
-    <nav class="nav-menu">
-      <a href="#about">소개</a>
-      <a href="#lecture">강의</a>
-      <a href="#vibe">바이브코딩</a>
-      <a href="#gpts">자료실</a>
-      <a href="#contact">문의하기</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="#contact" class="btn btn--accent btn--sm">강의 문의</a>
-      <button class="hamburger" id="hamburger" aria-label="메뉴">☰</button>
+<!-- ============================================================
+     내비게이션
+     ============================================================ -->
+<nav>
+  <div class="container nav-inner">
+    <!-- ▼ [수정 포인트 ②] 스튜디오명(로고) -->
+    <a href="#hero" class="logo">노바 스튜디오<b>.</b></a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#about">소개</a></li>
+      <li><a href="#lecture">강의</a></li>
+      <li><a href="#vibe">바이브코딩</a></li>
+      <li><a href="#gpts">자료실</a></li>
+      <li><a href="#contact">문의하기</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">강의 문의</a>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
-</header>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about">소개</a>
-  <a href="#lecture">강의</a>
-  <a href="#vibe">바이브코딩</a>
-  <a href="#gpts">자료실</a>
-  <a href="#contact">문의하기</a>
-  <a href="#contact" style="color:var(--accent);font-weight:700">강의 문의 →</a>
-</div>
+</nav>
 
-<!-- ====================== ② 히어로 ====================== -->
+<!-- ============================================================
+     ② 히어로
+     ============================================================ -->
 <section id="hero">
-  <!-- 블루프린트 모티프 -->
   <div class="bp-grid"></div>
-  <div class="blueprint" aria-hidden="true">
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"
-         fill="none" stroke="var(--blueprint)" stroke-width="1">
-      <!-- 회전하는 도면 원호 R=280 -->
-      <g class="bp-rotor" transform="translate(1080 360)">
-        <circle r="280"/>
-        <circle r="210" stroke-dasharray="4 8"/>
-        <circle r="140"/>
-        <line x1="-300" y1="0" x2="300" y2="0"/>
-        <line x1="0" y1="-300" x2="0" y2="300"/>
-        <line x1="-212" y1="-212" x2="212" y2="212" stroke-dasharray="3 7"/>
-        <line x1="212" y1="-212" x2="-212" y2="212" stroke-dasharray="3 7"/>
-        <circle r="6" fill="var(--blueprint)" stroke="none"/>
+  <!-- 블루프린트 도면 모티프 (SVG, 느리게 회전) -->
+  <div class="blueprint">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor">
+      <g class="bp-rotate" stroke-width="1">
+        <circle cx="850" cy="380" r="280" stroke-dasharray="2 8" opacity=".5"/>
+        <circle cx="850" cy="380" r="200" opacity=".35"/>
+        <circle cx="850" cy="380" r="120" stroke-dasharray="6 6" opacity=".4"/>
+        <line x1="850" y1="60" x2="850" y2="700" opacity=".25"/>
+        <line x1="530" y1="380" x2="1170" y2="380" opacity=".25"/>
+        <path d="M850 380 L1130 380 A280 280 0 0 0 1010 135 Z" opacity=".3"/>
       </g>
-      <!-- 단면선 SECTION B-B' -->
-      <g class="bp-dash">
-        <line x1="0" y1="640" x2="1440" y2="640"/>
-      </g>
-      <text x="40" y="628" fill="var(--blueprint)" stroke="none"
-            font-size="13" letter-spacing="3">SECTION B-B'</text>
-      <text x="40" y="120" fill="var(--blueprint)" stroke="none"
-            font-size="13" letter-spacing="3">FLOOR PLAN · R=280</text>
-      <!-- 레벨 표시 -->
-      <g fill="var(--blueprint)" stroke="none" font-size="12" letter-spacing="1.5">
-        <text x="40" y="500">+6.000</text>
-        <text x="40" y="570">+3.000</text>
-        <text x="40" y="650">±0.000</text>
-      </g>
-      <g stroke-dasharray="2 6">
-        <line x1="120" y1="495" x2="1440" y2="495"/>
-        <line x1="120" y1="565" x2="1440" y2="565"/>
-      </g>
-      <!-- 치수선 -->
-      <g floatable>
-        <line x1="200" y1="760" x2="520" y2="760"/>
-        <line x1="200" y1="752" x2="200" y2="768"/>
-        <line x1="520" y1="752" x2="520" y2="768"/>
-        <text x="320" y="752" fill="var(--blueprint)" stroke="none" font-size="11">3,200</text>
+      <g stroke-width="1" opacity=".55">
+        <!-- 단면선 SECTION B-B' -->
+        <line x1="60" y1="640" x2="560" y2="640" stroke-dasharray="14 6 3 6"/>
+        <circle cx="60" cy="640" r="14"/><text x="55" y="645" font-size="13" fill="currentColor" stroke="none">B</text>
+        <circle cx="560" cy="640" r="14"/><text x="552" y="645" font-size="13" fill="currentColor" stroke="none">B'</text>
+        <text x="250" y="625" font-size="13" fill="currentColor" stroke="none" letter-spacing="2">SECTION B-B'</text>
+        <!-- FLOOR PLAN 라벨 -->
+        <text x="80" y="120" font-size="14" fill="currentColor" stroke="none" letter-spacing="3">FLOOR PLAN — R=280</text>
+        <!-- 레벨 표시 -->
+        <line x1="100" y1="240" x2="420" y2="240"/>
+        <text x="100" y="232" font-size="12" fill="currentColor" stroke="none">+6.000</text>
+        <line x1="100" y1="320" x2="420" y2="320"/>
+        <text x="100" y="312" font-size="12" fill="currentColor" stroke="none">+3.000</text>
+        <line x1="100" y1="400" x2="420" y2="400" stroke-width="1.4"/>
+        <text x="100" y="392" font-size="12" fill="currentColor" stroke="none">±0.000</text>
+        <rect x="100" y="240" width="60" height="160" opacity=".4"/>
+        <rect x="200" y="320" width="90" height="80" opacity=".4"/>
       </g>
     </svg>
   </div>
 
-  <div class="wrap hero-inner">
-    <span class="eyebrow">AI Content Creative Studio</span>
-    <!-- [수정 포인트 ②] 대제목 = 스튜디오명 -->
-    <h1 class="hero-title">[스튜디오명]<span class="accent">.</span></h1>
-    <!-- [수정 포인트 ③] 슬로건 -->
-    <p class="hero-desc">진짜 실력자가 AI를 만날 때, 불가능이 사라집니다.<br />
-      AI 교육 · 바이브코딩 · 영상 제작까지, 현장에서 검증된 실력으로 함께합니다.</p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn btn--accent">강의 신청하기</a>
-      <a href="#about" class="btn">스튜디오 소개 →</a>
-    </div>
+  <div class="container">
+    <div class="hero-inner">
+      <span class="hero-label">AI Content Creative Studio</span>
+      <!-- ▼ [수정 포인트 ②] 대제목(스튜디오명) -->
+      <h1 class="hero-title">노바 스튜디오<span class="accent">.</span></h1>
+      <!-- ▼ [수정 포인트 ③] 슬로건 -->
+      <p class="hero-sub">진짜 실력자가 AI를 만날 때, 불가능이 사라집니다.<br>
+        교육 · 바이브코딩 · 영상제작을 하나의 흐름으로 설계하는 AI 크리에이티브 스튜디오.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">강의 신청하기</a>
+        <a href="#about" class="btn btn-ghost">스튜디오 소개 →</a>
+      </div>
 
-    <!-- 숫자 카운터 -->
-    <div class="counters">
-      <div class="counter"><div class="num" data-count="2400">0</div><div class="lbl">누적 수강인원 +</div></div>
-      <div class="counter"><div class="num" data-count="86">0</div><div class="lbl">바이브코딩 앱 +</div></div>
-      <div class="counter"><div class="num" data-count="48">0</div><div class="lbl">GPTs &amp; Gems +</div></div>
+      <!-- 숫자 카운터 (스크롤되면 0부터 상승) -->
+      <div class="counters">
+        <div class="counter"><div class="num" data-count="2400" data-suffix="+">0</div><div class="lab">누적 수강인원</div></div>
+        <div class="counter"><div class="num" data-count="68" data-suffix="+">0</div><div class="lab">바이브코딩 앱</div></div>
+        <div class="counter"><div class="num" data-count="34" data-suffix="+">0</div><div class="lab">GPTs &amp; Gems</div></div>
+      </div>
     </div>
   </div>
-
-  <div class="scroll-ind">SCROLL<div class="bar"></div></div>
+  <div class="scroll-ind">SCROLL<span>↓</span></div>
 </section>
 
-<!-- ====================== ③ 소개 / Studio ====================== -->
-<section id="about" class="section">
-  <div class="wrap">
-    <div class="section-head fade-up">
-      <div class="sec-label">01 — Studio</div>
-      <h2 class="sec-title">AI 기술과 실력의 만남</h2>
-    </div>
+<!-- ============================================================
+     ③ 01 — Studio / 소개
+     ============================================================ -->
+<section id="about">
+  <div class="container">
+    <span class="sec-label fade-up">01 — Studio</span>
+    <h2 class="sec-title fade-up">AI 기술과 실력의 만남</h2>
 
-    <div class="quote fade-up">진짜 전문가의 손에 AI가 쥐어질 때, 비로소 <span>혁신</span>이 시작됩니다.</div>
+    <div class="quote-box fade-up">"진짜 전문가의 손에 AI가 쥐어질 때, 비로소 혁신이 시작됩니다."</div>
 
-    <p class="lead fade-up">[스튜디오명]은 단순히 도구 사용법을 가르치지 않습니다.
-      현장에서 쌓은 실무 역량 위에 최신 AI를 결합해, 누구나 자신의 아이디어를
-      실제 제품·콘텐츠·서비스로 완성하도록 돕습니다.</p>
+    <p class="sec-desc fade-up">
+      노바 스튜디오은 현장에서 검증된 실무 전문가들이 모여, AI 도구를 '실제로 쓰는 법'을 가르치고 만듭니다.
+      교육에서 끝나지 않고 바이브코딩·영상제작·자동화까지, 결과물로 증명하는 스튜디오입니다.
+    </p>
 
     <div class="tags fade-up">
-      <span class="tag"># AI 교육</span>
-      <span class="tag"># 바이브코딩</span>
-      <span class="tag"># 영상 제작</span>
-      <span class="tag"># GPTs · Gems</span>
-      <span class="tag"># 기업 자동화</span>
-      <span class="tag"># 콘텐츠 기획</span>
+      <span class="tag">AI 교육</span>
+      <span class="tag">바이브코딩</span>
+      <span class="tag">영상 제작</span>
+      <span class="tag">GPTs · Gems</span>
+      <span class="tag">업무 자동화</span>
+      <span class="tag">기업 출강</span>
     </div>
 
     <!-- 서비스 카드 4개 -->
-    <div class="grid g-4" style="margin-top:34px">
-      <div class="card fade-up"><div class="idx">/01</div><h3>AI 교육 서비스</h3>
-        <p>입문부터 실전까지, 단계별 커리큘럼으로 AI 활용 역량을 확실하게 끌어올립니다.</p></div>
-      <div class="card fade-up"><div class="idx">/02</div><h3>바이브코딩</h3>
-        <p>코드를 몰라도 괜찮습니다. 말로 설명하면 작동하는 앱이 됩니다.</p></div>
-      <div class="card fade-up"><div class="idx">/03</div><h3>기업 홍보영상 제작</h3>
-        <p>AI 영상 생성 기술로 빠르고 합리적인 비용의 고품질 브랜드 영상을 제작합니다.</p></div>
-      <div class="card fade-up"><div class="idx">/04</div><h3>AI 드라마 · 배우</h3>
-        <p>가상 배우와 AI 연출로 새로운 형태의 스토리 콘텐츠를 만들어 냅니다.</p></div>
+    <div class="cards-4">
+      <div class="svc-card fade-up">
+        <div class="no">/01</div><h4>AI 교육 서비스</h4>
+        <p>입문부터 실전까지, 직접 만들며 배우는 핸즈온 커리큘럼.</p>
+      </div>
+      <div class="svc-card fade-up">
+        <div class="no">/02</div><h4>바이브코딩</h4>
+        <p>코드를 몰라도 AI와 대화하며 나만의 앱·도구를 완성합니다.</p>
+      </div>
+      <div class="svc-card fade-up">
+        <div class="no">/03</div><h4>기업 홍보영상 제작</h4>
+        <p>생성형 AI로 기획·촬영·편집까지, 빠르고 임팩트 있게.</p>
+      </div>
+      <div class="svc-card fade-up">
+        <div class="no">/04</div><h4>AI 드라마 · 배우</h4>
+        <p>AI 캐릭터와 스토리텔링으로 새로운 콘텐츠 포맷을 실험합니다.</p>
+      </div>
     </div>
 
     <!-- 비전 블록 -->
     <div class="vision fade-up">
-      <h3>기술은 빠르게 변하지만,<br /><span>본질을 아는 사람</span>이 결국 앞섭니다.</h3>
-      <div class="vision-list">
-        <div class="vi"><div class="em">🎯</div><div class="ti">실전 중심</div><div class="de">바로 써먹는 결과물 위주의 수업</div></div>
-        <div class="vi"><div class="em">🤝</div><div class="ti">밀착 코칭</div><div class="de">수강 후에도 이어지는 커뮤니티</div></div>
-        <div class="vi"><div class="em">⚡</div><div class="ti">최신 반영</div><div class="de">매월 업데이트되는 커리큘럼</div></div>
-        <div class="vi"><div class="em">🌱</div><div class="ti">성장 지원</div><div class="de">개인 프로젝트 완성까지 동행</div></div>
+      <h3>도구가 아니라 <span style="color:var(--accent)">결과</span>를 가르칩니다.<br>배운 그날부터 바로 써먹는 AI를 지향합니다.</h3>
+      <div class="vision-grid">
+        <div class="vision-item"><div class="emo">🎯</div><h5>실전 중심</h5><p>이론보다 만들어 보는 경험에 집중</p></div>
+        <div class="vision-item"><div class="emo">⚡</div><h5>속도</h5><p>아이디어를 하루 안에 결과물로</p></div>
+        <div class="vision-item"><div class="emo">🤝</div><h5>지속 지원</h5><p>수강 후에도 이어지는 커뮤니티</p></div>
+        <div class="vision-item"><div class="emo">🔄</div><h5>업데이트</h5><p>매월 최신 AI 트렌드 반영</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================== ④ 강의 / Lecture ====================== -->
-<section id="lecture" class="section">
-  <div class="wrap">
-    <div class="section-head fade-up">
-      <div class="sec-label">02 — Lecture</div>
-      <h2 class="sec-title">실무로 이어지는 강의</h2>
-      <p class="lead">기업·기관·개인 맞춤으로 진행되는 AI 실전 강의. 듣고 끝나는 수업이 아니라,
-        손에 결과물이 남는 수업입니다.</p>
-    </div>
+<!-- ============================================================
+     ④ 02 — Lecture / 강의
+     ============================================================ -->
+<section id="lecture">
+  <div class="container">
+    <span class="sec-label fade-up">02 — Lecture</span>
+    <h2 class="sec-title fade-up">실무로 이어지는 강의</h2>
+    <p class="sec-desc fade-up">개인·기업·기관 맞춤으로 진행하는 AI 실전 강의. 들은 즉시 현업에 적용할 수 있도록 설계했습니다.</p>
 
     <!-- 모집중 강조 카드 -->
-    <div class="recruit fade-up">
+    <div class="recruit-card fade-up">
       <div>
-        <span class="pill">🔥 모집중</span>
-        <h3>AI 바이브코딩 4주 완성 부트캠프</h3>
-        <p class="lead">코딩 경험이 전혀 없어도, 4주 후엔 나만의 웹앱 하나를 직접 배포합니다.</p>
-        <div class="meta">
-          <div><b>일정</b> 2026.07.05 ~ 07.26 (매주 토)</div>
-          <div><b>시간</b> 오후 2시 ~ 5시 (3시간 × 4회)</div>
-          <div><b>정원</b> 선착순 12명</div>
-          <div><b>장소</b> 온라인(Zoom) + 오프라인 병행</div>
+        <span class="rc-badge">🔥 모집중</span>
+        <h3>[6기] AI 바이브코딩 실전 부트캠프</h3>
+        <div class="rc-meta">
+          <span>📅 일정 <b>2026.07.05 ~ 08.16 (매주 토)</b></span>
+          <span>⏰ 시간 <b>10:00 – 13:00</b></span>
+          <span>👥 정원 <b>선착순 20명</b></span>
+          <span>📍 장소 <b>온라인 + 강남 오프라인</b></span>
         </div>
       </div>
-      <div style="text-align:center">
-        <a href="#contact" class="btn btn--accent" style="width:100%;justify-content:center">지금 신청하기</a>
-        <p style="color:var(--text-dim);font-size:13px;margin-top:12px">조기 마감될 수 있습니다</p>
-      </div>
+      <a href="#contact" class="btn btn-primary">지금 신청하기 →</a>
     </div>
 
     <!-- 강의 카드 그리드 -->
-    <div class="grid g-3">
-      <div class="card lec-card fade-up"><span class="badge">입문</span>
-        <h3>ChatGPT 업무 자동화 입문</h3>
-        <p>반복 업무를 AI에게 맡기는 첫걸음.</p>
-        <ul class="checklist"><li>프롬프트 기본기</li><li>문서·메일 자동 작성</li><li>나만의 GPTs 만들기</li><li>업무 워크플로 설계</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">바이브코딩</span>
-        <h3>노코드 웹앱 만들기</h3>
-        <p>아이디어를 곧바로 작동하는 앱으로.</p>
-        <ul class="checklist"><li>AI 코딩 도구 세팅</li><li>화면·기능 설계</li><li>실제 배포까지</li><li>유지보수 기초</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">영상</span>
-        <h3>AI 홍보영상 제작 실전</h3>
-        <p>대본부터 편집까지 혼자 끝내기.</p>
-        <ul class="checklist"><li>AI 영상 생성 도구</li><li>스토리보드 기획</li><li>AI 성우·자막</li><li>브랜드 톤 맞추기</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">심화</span>
-        <h3>업무 에이전트 구축</h3>
-        <p>여러 AI를 연결해 자동 처리하기.</p>
-        <ul class="checklist"><li>API 연동 기초</li><li>데이터 자동 수집</li><li>알림·리포트 자동화</li><li>실패 대비 설계</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">기업 출강</span>
-        <h3>임직원 AI 리터러시</h3>
-        <p>조직 전체의 AI 활용 수준 끌어올리기.</p>
-        <ul class="checklist"><li>부서별 활용 사례</li><li>보안·윤리 가이드</li><li>실습 워크숍</li><li>사내 가이드 제작</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">콘텐츠</span>
-        <h3>AI 콘텐츠 크리에이터</h3>
-        <p>1인 미디어를 AI로 운영하기.</p>
-        <ul class="checklist"><li>채널 기획·전략</li><li>썸네일·이미지 생성</li><li>대본·자막 자동화</li><li>업로드 루틴 설계</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">디자인</span>
-        <h3>AI 이미지 · 브랜딩</h3>
-        <p>로고부터 상세페이지까지 한 번에.</p>
-        <ul class="checklist"><li>이미지 생성 마스터</li><li>일관된 브랜드 룩</li><li>상세페이지 제작</li><li>저작권 안전 활용</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">데이터</span>
-        <h3>AI 데이터 분석 입문</h3>
-        <p>엑셀을 넘어 AI로 인사이트 뽑기.</p>
-        <ul class="checklist"><li>데이터 정리·시각화</li><li>자연어로 분석하기</li><li>리포트 자동 생성</li><li>의사결정 활용</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
-
-      <div class="card lec-card fade-up"><span class="badge">개인 코칭</span>
-        <h3>1:1 프로젝트 멘토링</h3>
-        <p>당신의 아이디어, 끝까지 함께 완성.</p>
-        <ul class="checklist"><li>맞춤 커리큘럼</li><li>주간 진척 점검</li><li>실전 문제 해결</li><li>론칭 지원</li></ul>
-        <a href="#contact" class="card-link">문의 →</a></div>
+    <div class="lec-grid">
+      <div class="lec-card fade-up">
+        <span class="lec-badge">입문</span>
+        <h4>AI 첫걸음 클래스</h4>
+        <p>ChatGPT·Gemini를 업무에 처음 도입하는 분을 위한 기초 과정.</p>
+        <ul class="check"><li>프롬프트 작성 기본기</li><li>문서·메일 자동 초안</li><li>이미지 생성 입문</li><li>실습 위주 4주 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">실전</span>
+        <h4>바이브코딩 마스터</h4>
+        <p>코딩 몰라도 OK. AI와 대화로 웹앱·도구를 직접 만듭니다.</p>
+        <ul class="check"><li>노코드 + AI 조합</li><li>나만의 앱 배포까지</li><li>실제 프로젝트 1개 완성</li><li>8주 심화 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">영상</span>
+        <h4>AI 영상 제작 워크숍</h4>
+        <p>생성형 AI로 홍보·숏폼 영상을 기획부터 편집까지.</p>
+        <ul class="check"><li>AI 스토리보드</li><li>이미지·영상 생성</li><li>자동 자막·더빙</li><li>2일 집중 워크숍</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">기업</span>
+        <h4>기업 맞춤 출강</h4>
+        <p>부서 업무에 맞춘 AI 자동화 커리큘럼을 설계해 드립니다.</p>
+        <ul class="check"><li>업무 진단 후 설계</li><li>사내 데이터 활용</li><li>팀 단위 실습</li><li>일정·인원 협의</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">자동화</span>
+        <h4>업무 자동화 실전</h4>
+        <p>반복 업무를 GPTs·API·노코드로 자동화하는 노하우.</p>
+        <ul class="check"><li>나만의 GPTs 제작</li><li>데이터 자동 정리</li><li>알림·리포트 자동화</li><li>6주 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">크리에이터</span>
+        <h4>AI 콘텐츠 크리에이터</h4>
+        <p>블로그·SNS·유튜브를 AI로 빠르게 운영하는 통합 과정.</p>
+        <ul class="check"><li>콘텐츠 기획 자동화</li><li>썸네일·이미지 제작</li><li>채널 운영 전략</li><li>6주 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">디자인</span>
+        <h4>AI 디자인 스튜디오</h4>
+        <p>로고·포스터·상세페이지를 AI 디자인 도구로 완성합니다.</p>
+        <ul class="check"><li>브랜드 톤 설정</li><li>이미지 생성·보정</li><li>실무 결과물 제작</li><li>4주 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">교육자</span>
+        <h4>강사·교사를 위한 AI</h4>
+        <p>수업·교안·평가에 AI를 접목하는 교육자 전용 과정.</p>
+        <ul class="check"><li>교안 자동 생성</li><li>맞춤형 자료 제작</li><li>학생 활동 설계</li><li>3주 과정</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
+      <div class="lec-card fade-up">
+        <span class="lec-badge">1:1</span>
+        <h4>프라이빗 코칭</h4>
+        <p>목표·수준에 맞춘 1:1 맞춤 코칭으로 빠르게 성장합니다.</p>
+        <ul class="check"><li>개인 목표 진단</li><li>맞춤 커리큘럼</li><li>프로젝트 동행</li><li>회차 협의</li></ul>
+        <a href="#contact" class="lec-link">문의 →</a>
+      </div>
     </div>
 
     <!-- 강의 일정 표 -->
-    <div class="table-wrap fade-up">
-      <div class="table-scroll">
-        <table>
-          <thead><tr>
-            <th>날짜</th><th>강의명</th><th>기관 · 장소</th><th>유형</th><th>상태</th><th>문의</th>
-          </tr></thead>
-          <tbody>
-            <tr><td>2026.07.05</td><td>AI 바이브코딩 부트캠프</td><td>온라인 (Zoom)</td><td>정규</td><td><span class="st open">모집중</span></td><td><a href="#contact" class="q">문의</a></td></tr>
-            <tr><td>2026.07.12</td><td>ChatGPT 업무 자동화</td><td>서울 강남 세미나실</td><td>특강</td><td><span class="st open">모집중</span></td><td><a href="#contact" class="q">문의</a></td></tr>
-            <tr><td>2026.07.20</td><td>임직원 AI 리터러시</td><td>OO기업 (출강)</td><td>기업</td><td><span class="st soon">예정</span></td><td><a href="#contact" class="q">문의</a></td></tr>
-            <tr><td>2026.08.02</td><td>AI 홍보영상 제작 실전</td><td>부산 콘텐츠허브</td><td>워크숍</td><td><span class="st soon">예정</span></td><td><a href="#contact" class="q">문의</a></td></tr>
-            <tr><td>2026.08.16</td><td>AI 콘텐츠 크리에이터</td><td>온라인 (Zoom)</td><td>정규</td><td><span class="st open">모집중</span></td><td><a href="#contact" class="q">문의</a></td></tr>
-            <tr><td>2026.06.07</td><td>노코드 웹앱 만들기</td><td>대전 시민교육원</td><td>특강</td><td><span class="st done">마감</span></td><td><span style="color:var(--text-dim)">종료</span></td></tr>
-            <tr><td>2026.05.24</td><td>AI 이미지 · 브랜딩</td><td>OO협회 (출강)</td><td>기업</td><td><span class="st done">마감</span></td><td><span style="color:var(--text-dim)">종료</span></td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="sched-wrap fade-up">
+      <table>
+        <thead>
+          <tr><th>날짜</th><th>강의명</th><th>기관 · 장소</th><th>유형</th><th>상태</th><th>문의</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2026.07.05</td><td>AI 바이브코딩 부트캠프 6기</td><td>강남 오프라인</td><td>정규</td><td><span class="st-badge st-open">모집중</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.07.12</td><td>기업 출강 — AI 업무 자동화</td><td>OO기업 사내교육</td><td>출강</td><td><span class="st-badge st-soon">예정</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.07.20</td><td>AI 영상 제작 워크숍</td><td>온라인 ZOOM</td><td>워크숍</td><td><span class="st-badge st-open">모집중</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.08.03</td><td>강사·교사를 위한 AI 활용</td><td>OO교육청</td><td>출강</td><td><span class="st-badge st-soon">예정</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.06.14</td><td>AI 첫걸음 클래스 5기</td><td>온라인 ZOOM</td><td>정규</td><td><span class="st-badge st-done">마감</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.06.07</td><td>AI 콘텐츠 크리에이터 과정</td><td>홍대 오프라인</td><td>정규</td><td><span class="st-badge st-done">마감</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.08.16</td><td>업무 자동화 실전 3기</td><td>온라인 ZOOM</td><td>정규</td><td><span class="st-badge st-soon">예정</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+          <tr><td>2026.05.24</td><td>AI 디자인 스튜디오 2기</td><td>판교 오프라인</td><td>정규</td><td><span class="st-badge st-done">마감</span></td><td><a href="#contact" class="tbl-link">문의</a></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- ====================== ⑤ 바이브코딩 / Vibe Coding ====================== -->
-<section id="vibe" class="section">
-  <div class="wrap">
-    <div class="section-head fade-up">
-      <div class="sec-label">03 — Vibe Coding</div>
-      <h2 class="sec-title">말하면, 만들어집니다</h2>
-      <p class="lead">수업과 프로젝트에서 직접 만든 바이브코딩 앱들입니다. 카드를 눌러 둘러보세요.</p>
-    </div>
+<!-- ============================================================
+     ⑤ 03 — Vibe Coding
+     ============================================================ -->
+<section id="vibe">
+  <div class="container">
+    <span class="sec-label fade-up">03 — Vibe Coding</span>
+    <h2 class="sec-title fade-up">대화로 만든 앱들</h2>
+    <p class="sec-desc fade-up">코드 한 줄 없이, AI와 대화하며 만든 실제 앱·도구 모음입니다. 수강생과 함께 만든 결과물도 포함됩니다.</p>
 
-    <div class="grid g-4">
-      <a href="#" class="card app-card fade-up"><span class="emoji">📅</span><h3>스마트 일정 도우미</h3>
-        <p>말로 적으면 알아서 정리되는 캘린더.</p><div class="app-tags"><span>#생산성</span><span>#일정</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🧾</span><h3>영수증 자동 정리</h3>
-        <p>사진 찍으면 가계부가 완성.</p><div class="app-tags"><span>#가계부</span><span>#OCR</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🍱</span><h3>오늘 뭐 먹지</h3>
-        <p>냉장고 재료로 메뉴 추천.</p><div class="app-tags"><span>#생활</span><span>#추천</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">💬</span><h3>고객 응대 챗봇</h3>
-        <p>FAQ를 학습한 24시간 상담원.</p><div class="app-tags"><span>#비즈니스</span><span>#챗봇</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">📊</span><h3>설문 분석기</h3>
-        <p>응답을 넣으면 인사이트 요약.</p><div class="app-tags"><span>#데이터</span><span>#분석</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">✍️</span><h3>블로그 초안 생성</h3>
-        <p>주제만 주면 글 한 편 뚝딱.</p><div class="app-tags"><span>#콘텐츠</span><span>#글쓰기</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🎙️</span><h3>회의록 요약</h3>
-        <p>녹음을 핵심만 깔끔하게.</p><div class="app-tags"><span>#업무</span><span>#요약</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🏷️</span><h3>상세페이지 메이커</h3>
-        <p>상품 정보로 판매 페이지 자동 생성.</p><div class="app-tags"><span>#커머스</span><span>#디자인</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">📚</span><h3>나만의 단어장</h3>
-        <p>읽은 글에서 단어를 자동 수집.</p><div class="app-tags"><span>#학습</span><span>#영어</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🩺</span><h3>건강 습관 트래커</h3>
-        <p>기록하면 코칭 메시지가 도착.</p><div class="app-tags"><span>#건강</span><span>#습관</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🗺️</span><h3>여행 코스 플래너</h3>
-        <p>취향 입력하면 일정표 완성.</p><div class="app-tags"><span>#여행</span><span>#계획</span></div></a>
-      <a href="#" class="card app-card fade-up"><span class="emoji">🎨</span><h3>색상 팔레트 추천</h3>
-        <p>분위기를 말하면 컬러가 나온다.</p><div class="app-tags"><span>#디자인</span><span>#도구</span></div></a>
+    <div class="app-grid">
+      <a href="#" class="app-card fade-up"><div class="emo">📅</div><h4>스마트 일정 플래너</h4><p>AI가 하루 일정을 자동 정리해 주는 도구.</p><div class="app-tags"><span>생산성</span><span>웹앱</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🧾</div><h4>견적서 자동 생성기</h4><p>항목만 입력하면 견적서를 즉시 완성.</p><div class="app-tags"><span>업무</span><span>자동화</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">📝</div><h4>블로그 글감 추천</h4><p>키워드로 글감과 개요를 뽑아 줍니다.</p><div class="app-tags"><span>콘텐츠</span><span>AI</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🍱</div><h4>오늘 뭐 먹지</h4><p>냉장고 재료로 메뉴를 추천하는 앱.</p><div class="app-tags"><span>생활</span><span>재미</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">💰</div><h4>용돈 기입장</h4><p>음성으로 입력하는 간편 가계부.</p><div class="app-tags"><span>금융</span><span>모바일</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🎤</div><h4>회의록 요약기</h4><p>녹취를 붙여넣으면 핵심만 정리.</p><div class="app-tags"><span>업무</span><span>요약</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🏃</div><h4>운동 루틴 코치</h4><p>목표에 맞춰 운동 계획을 짜 줍니다.</p><div class="app-tags"><span>건강</span><span>코치</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">📚</div><h4>독서 노트 정리</h4><p>읽은 책을 카드로 자동 정리.</p><div class="app-tags"><span>학습</span><span>기록</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🎨</div><h4>컬러 팔레트 생성</h4><p>분위기 키워드로 색 조합 추천.</p><div class="app-tags"><span>디자인</span><span>도구</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🗺️</div><h4>여행 코스 플래너</h4><p>도시·기간 입력하면 동선 추천.</p><div class="app-tags"><span>여행</span><span>추천</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">📨</div><h4>이메일 톤 변환기</h4><p>같은 내용을 상황별 톤으로 변환.</p><div class="app-tags"><span>업무</span><span>글쓰기</span></div></a>
+      <a href="#" class="app-card fade-up"><div class="emo">🎯</div><h4>목표 트래커</h4><p>매일 목표 진행도를 시각화.</p><div class="app-tags"><span>생산성</span><span>대시보드</span></div></a>
     </div>
   </div>
 </section>
 
-<!-- ====================== ⑥ 자료실 / GPTs & Gems ====================== -->
-<section id="gpts" class="section">
-  <div class="wrap">
-    <div class="section-head fade-up">
-      <div class="sec-label">04 — GPTs &amp; Gems</div>
-      <h2 class="sec-title">바로 쓰는 AI 도구 모음</h2>
-      <p class="lead">직접 만들어 운영 중인 맞춤형 AI들입니다. 수강생에게는 더 많은 도구가 열립니다.</p>
-    </div>
+<!-- ============================================================
+     ⑥ 04 — GPTs & Gems / 자료실
+     ============================================================ -->
+<section id="gpts">
+  <div class="container">
+    <span class="sec-label fade-up">04 — GPTs &amp; Gems</span>
+    <h2 class="sec-title fade-up">바로 쓰는 AI 자료실</h2>
+    <p class="sec-desc fade-up">직접 만든 맞춤형 GPTs와 Gems를 모았습니다. 강의 수강생은 전용 버전까지 사용할 수 있어요.</p>
 
-    <div class="gg fade-up">
+    <div class="gpts-cols">
       <!-- My GPTs -->
-      <div class="gg-col">
-        <h3>🤖 My GPTs <span style="font-size:13px;color:var(--text-dim);font-weight:500">· ChatGPT 기반</span></h3>
-        <p class="sub">반복 작업을 대신해 주는 나만의 GPT들</p>
-        <div class="gg-list">
-          <div class="gg-item"><span class="em">📝</span><div><div class="ti">보고서 초안 도우미</div><div class="de">핵심만 넣으면 구조 잡힌 초안 완성</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">📨</span><div><div class="ti">비즈니스 메일 작성기</div><div class="de">상황만 말하면 정중한 메일 자동 생성</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">🔍</span><div><div class="ti">프롬프트 교정기</div><div class="de">내 프롬프트를 더 똑똑하게 다듬기</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">📈</span><div><div class="ti">마케팅 카피 생성</div><div class="de">타깃·톤 맞춤 광고 문구 제작</div></div><span class="mini only go">수강생 전용</span></div>
-          <div class="gg-item"><span class="em">🧮</span><div><div class="ti">엑셀 함수 해결사</div><div class="de">원하는 결과를 말하면 수식으로</div></div><span class="mini only go">수강생 전용</span></div>
-          <div class="gg-item"><span class="em">🎓</span><div><div class="ti">강의 복습 튜터</div><div class="de">수업 내용 질문하고 다시 배우기</div></div><span class="mini only go">수강생 전용</span></div>
+      <div class="gpts-col fade-up">
+        <h3>🤖 My GPTs <span style="font-size:13px;color:var(--muted);font-weight:500">· ChatGPT 기반</span></h3>
+        <p>업무·창작에 바로 쓰는 맞춤 GPT 모음</p>
+        <div class="gpts-list">
+          <div class="gpts-item"><div class="emo">✍️</div><div class="gi-body"><h5>블로그 작성 도우미</h5><p>키워드만 넣으면 초안 완성</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">📊</div><div class="gi-body"><h5>보고서 정리 GPT</h5><p>긴 자료를 핵심만 요약</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">💡</div><div class="gi-body"><h5>아이디어 브레인스토밍</h5><p>막힐 때 발상을 확장</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">📧</div><div class="gi-body"><h5>비즈니스 메일 작성</h5><p>상황별 정중한 메일</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">🎬</div><div class="gi-body"><h5>숏폼 대본 생성기</h5><p>후킹 강한 60초 대본</p></div><span class="gi-badge gi-lock">수강생 전용</span></div>
+          <div class="gpts-item"><div class="emo">🧠</div><div class="gi-body"><h5>프롬프트 코치</h5><p>프롬프트를 다듬어 줌</p></div><span class="gi-badge gi-lock">수강생 전용</span></div>
         </div>
       </div>
 
       <!-- My Gems -->
-      <div class="gg-col">
-        <h3>💎 My Gems <span style="font-size:13px;color:var(--text-dim);font-weight:500">· Gemini 기반</span></h3>
-        <p class="sub">구글 생태계와 잘 맞는 맞춤형 Gem들</p>
-        <div class="gg-list">
-          <div class="gg-item"><span class="em">🗂️</span><div><div class="ti">문서 요약 Gem</div><div class="de">긴 자료를 한 장으로 압축</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">🌐</span><div><div class="ti">번역 &amp; 현지화</div><div class="de">자연스러운 한↔영 번역과 톤 조정</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">💡</span><div><div class="ti">아이디어 브레인스토밍</div><div class="de">막힐 때 발상을 확 넓혀주는 파트너</div></div><span class="mini link go">바로가기</span></div>
-          <div class="gg-item"><span class="em">📅</span><div><div class="ti">일정 정리 Gem</div><div class="de">할 일을 우선순위로 정리</div></div><span class="mini only go">수강생 전용</span></div>
-          <div class="gg-item"><span class="em">🎬</span><div><div class="ti">영상 대본 Gem</div><div class="de">주제만 주면 후킹 대본 작성</div></div><span class="mini only go">수강생 전용</span></div>
-          <div class="gg-item"><span class="em">📚</span><div><div class="ti">학습 플래너 Gem</div><div class="de">목표 기반 공부 계획 자동 설계</div></div><span class="mini only go">수강생 전용</span></div>
+      <div class="gpts-col fade-up">
+        <h3>💎 My Gems <span style="font-size:13px;color:var(--muted);font-weight:500">· Gemini 기반</span></h3>
+        <p>구글 생태계와 잘 맞는 맞춤 Gem 모음</p>
+        <div class="gpts-list">
+          <div class="gpts-item"><div class="emo">📑</div><div class="gi-body"><h5>문서 요약 Gem</h5><p>Docs·PDF를 한눈에</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">🗓️</div><div class="gi-body"><h5>일정 정리 Gem</h5><p>캘린더 정리 도우미</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">🔍</div><div class="gi-body"><h5>리서치 어시스턴트</h5><p>주제별 자료 조사</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">📈</div><div class="gi-body"><h5>스프레드시트 분석</h5><p>표 데이터를 해석</p></div><span class="gi-badge gi-go">바로가기</span></div>
+          <div class="gpts-item"><div class="emo">🌐</div><div class="gi-body"><h5>번역·현지화 Gem</h5><p>자연스러운 번역</p></div><span class="gi-badge gi-lock">수강생 전용</span></div>
+          <div class="gpts-item"><div class="emo">📷</div><div class="gi-body"><h5>이미지 분석 Gem</h5><p>사진 설명·태깅</p></div><span class="gi-badge gi-lock">수강생 전용</span></div>
         </div>
       </div>
     </div>
 
-    <div class="gg-note fade-up">
-      <div>
-        <div class="t">🔓 강의 수강생 전용 · 매월 업데이트</div>
-        <div class="d">수강생에게는 모든 GPTs &amp; Gems 전체 라이브러리와 신규 도구가 매월 제공됩니다.</div>
-      </div>
-      <a href="#contact" class="btn btn--accent">수강 문의하기</a>
+    <div class="gpts-notice fade-up">
+      <p><b>강의 수강생 전용 · 매월 업데이트</b><br>최신 AI 트렌드에 맞춰 매월 새로운 GPTs와 Gems가 추가됩니다.</p>
+      <a href="#contact" class="btn btn-primary">자료실 이용 문의</a>
     </div>
   </div>
 </section>
 
-<!-- ====================== ⑦ 문의 / Contact ====================== -->
-<section id="contact" class="section">
-  <div class="wrap">
-    <div class="section-head fade-up">
-      <div class="sec-label">06 — Contact</div>
-      <h2 class="sec-title">함께 시작해요</h2>
-      <p class="lead">강의 신청, 기업 출강, 영상 제작 의뢰 무엇이든 편하게 남겨주세요.</p>
-    </div>
+<!-- ============================================================
+     ⑦ 06 — Contact / 문의
+     ============================================================ -->
+<section id="contact">
+  <div class="container">
+    <span class="sec-label fade-up">06 — Contact</span>
+    <h2 class="sec-title fade-up">문의하기</h2>
+    <p class="sec-desc fade-up">강의·출강·협업 무엇이든 편하게 문의하세요. 영업일 기준 1~2일 내 답변드립니다.</p>
 
-    <div class="contact">
-      <!-- 연락처 카드 [수정 포인트 ④] -->
-      <div class="info-card fade-up">
-        <div class="info-row"><span class="em">📍</span><div><div class="k">사무소 주소</div><div class="v">[여기에 주소]</div></div></div>
-        <div class="info-row"><span class="em">📧</span><div><div class="k">이메일</div><div class="v">[여기에 이메일]</div></div></div>
-        <div class="info-row"><span class="em">💬</span><div><div class="k">카카오톡 채널</div>
-          <!-- [수정 포인트 ④] 카톡채널 링크 -->
-          <a href="[여기에 카톡채널 링크]" class="btn btn--accent btn--sm" style="margin-top:8px">카카오톡 채널 추가</a></div></div>
-        <p style="color:var(--text-dim);font-size:13px;margin-top:18px">평일 10:00–18:00 · 보통 24시간 내 답변드립니다.</p>
+    <div class="contact-grid">
+      <!-- 연락처 -->
+      <div class="contact-info fade-up">
+        <!-- ▼ [수정 포인트 ④] 연락처(주소·이메일·카톡) -->
+        <div class="ci-card"><div class="emo">📍</div><div><h5>사무소 주소</h5><p>서울특별시 강남구 테헤란로 123, 4층</p></div></div>
+        <div class="ci-card"><div class="emo">📧</div><div><h5>이메일</h5><p>hello@novastudio.kr</p></div></div>
+        <div class="ci-card" style="flex-direction:column;align-items:stretch">
+          <div style="display:flex;gap:16px;align-items:flex-start"><div class="emo">💬</div><div><h5>카카오톡 채널</h5><p>가장 빠른 상담 채널</p></div></div>
+          <a href="https://pf.kakao.com/_novastudio" target="_blank" rel="noopener" class="btn kakao-btn">카카오톡 채널 문의 →</a>
+        </div>
       </div>
 
       <!-- 문의 폼 -->
-      <form class="form fade-up" id="contactForm">
-        <div class="form-grid">
-          <div class="field"><label>이름 <span class="req">*</span></label><input type="text" name="name" required placeholder="홍길동" /></div>
-          <div class="field"><label>연락처 <span class="req">*</span></label><input type="text" name="phone" required placeholder="010-0000-0000" /></div>
+      <form id="contactForm" class="fade-up">
+        <div class="form-row">
+          <div class="field"><label>이름 <span class="req">*</span></label><input type="text" name="name" required placeholder="홍길동"></div>
+          <div class="field"><label>연락처 <span class="req">*</span></label><input type="text" name="phone" required placeholder="010-0000-0000"></div>
         </div>
-        <div class="field"><label>소속</label><input type="text" name="org" placeholder="회사 / 단체 (선택)" /></div>
-        <div class="field"><label>문의 유형</label>
+        <div class="field"><label>소속</label><input type="text" name="org" placeholder="회사 / 기관명 (선택)"></div>
+        <div class="field">
+          <label>문의 유형</label>
           <select name="type">
-            <option>강의 신청</option><option>기업 출강 문의</option>
-            <option>영상 제작 의뢰</option><option>제휴 / 기타</option>
+            <option>강의 신청</option>
+            <option>기업 출강</option>
+            <option>영상 제작 의뢰</option>
+            <option>협업 제안</option>
+            <option>기타 문의</option>
           </select>
         </div>
-        <div class="field"><label>문의 내용 <span class="req">*</span></label><textarea name="message" required placeholder="문의하실 내용을 적어주세요."></textarea></div>
-        <button type="submit" class="btn btn--accent" style="width:100%;justify-content:center">문의 보내기</button>
+        <div class="field"><label>문의 내용 <span class="req">*</span></label><textarea name="msg" required placeholder="문의하실 내용을 입력해 주세요."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">문의 보내기</button>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ====================== ⑧ 푸터 ====================== -->
+<!-- ============================================================
+     ⑧ 푸터
+     ============================================================ -->
 <footer>
-  <div class="wrap">
-    <div class="foot-grid">
+  <div class="container">
+    <div class="foot-top">
       <div class="foot-brand">
-        <div class="logo"><span class="dot"></span>[스튜디오명]</div>
-        <p>진짜 실력자가 AI를 만날 때, 불가능이 사라집니다.</p>
+        <div class="logo">노바 스튜디오<b>.</b></div>
+        <p>진짜 실력자가 AI를 만날 때, 불가능이 사라집니다. AI 교육·콘텐츠 크리에이티브 스튜디오.</p>
         <div class="meta">
-          대표 [대표자명]<br />
-          [여기에 주소]<br />
-          [여기에 이메일]
+          대표 · 김노바<br>
+          주소 · 서울특별시 강남구 테헤란로 123, 4층<br>
+          이메일 · hello@novastudio.kr
         </div>
       </div>
-      <div class="foot-col"><h4>Service</h4>
-        <a href="#about">스튜디오 소개</a><a href="#vibe">바이브코딩</a><a href="#about">영상 제작</a><a href="#about">AI 드라마</a></div>
-      <div class="foot-col"><h4>Lecture</h4>
-        <a href="#lecture">강의 목록</a><a href="#lecture">강의 일정</a><a href="#contact">기업 출강</a><a href="#contact">1:1 멘토링</a></div>
-      <div class="foot-col"><h4>Resource</h4>
-        <a href="#gpts">My GPTs</a><a href="#gpts">My Gems</a><a href="#contact">문의하기</a></div>
+      <div class="foot-col">
+        <h6>Service</h6>
+        <ul><li><a href="#about">스튜디오 소개</a></li><li><a href="#about">AI 교육</a></li><li><a href="#vibe">바이브코딩</a></li><li><a href="#about">영상 제작</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h6>Lecture</h6>
+        <ul><li><a href="#lecture">강의 안내</a></li><li><a href="#lecture">강의 일정</a></li><li><a href="#lecture">기업 출강</a></li><li><a href="#contact">강의 신청</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h6>Resource</h6>
+        <ul><li><a href="#gpts">My GPTs</a></li><li><a href="#gpts">My Gems</a></li><li><a href="#gpts">자료실</a></li><li><a href="#contact">문의하기</a></li></ul>
+      </div>
     </div>
-    <div class="foot-bottom">
-      <span>© 2025–2026 [스튜디오명]. All rights reserved.</span>
-      <span>Designed with ▲ blueprint concept</span>
-    </div>
+    <div class="foot-bottom">© 2025-2026 노바 스튜디오. All rights reserved.</div>
   </div>
 </footer>
 
 <script>
-/* ===== 내비 스크롤 효과 ===== */
-const nav = document.getElementById('nav');
-addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20));
+/* ---------- 모바일 햄버거 메뉴 ---------- */
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+hamburger.addEventListener('click', () => navMenu.classList.toggle('open'));
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navMenu.classList.remove('open')));
 
-/* ===== 모바일 햄버거 메뉴 ===== */
-const ham = document.getElementById('hamburger');
-const mm  = document.getElementById('mobileMenu');
-ham.addEventListener('click', () => mm.classList.toggle('open'));
-mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
-
-/* ===== fade-up (IntersectionObserver) ===== */
+/* ---------- fade-up (IntersectionObserver) ---------- */
 const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-}, { threshold:.12 });
-document.querySelectorAll('.fade-up').forEach((el,i) => {
-  el.style.transitionDelay = (i % 4) * 70 + 'ms';
-  io.observe(el);
-});
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-/* ===== 숫자 카운터 ===== */
-const counters = document.querySelectorAll('.num');
-const cio = new IntersectionObserver((entries) => {
+/* ---------- 숫자 카운터 ---------- */
+const counterIO = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
-    const el = e.target, target = +el.dataset.count;
-    let cur = 0; const step = Math.max(1, Math.ceil(target/60));
-    const t = setInterval(() => {
-      cur += step;
-      if (cur >= target){ cur = target; clearInterval(t); }
-      el.textContent = cur.toLocaleString();
-    }, 22);
-    cio.unobserve(el);
+    const el = e.target;
+    const target = +el.dataset.count;
+    const suffix = el.dataset.suffix || '';
+    const dur = 1600; const start = performance.now();
+    function tick(now){
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString() + (p === 1 ? suffix : '');
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    counterIO.unobserve(el);
   });
-}, { threshold:.5 });
-counters.forEach(c => cio.observe(c));
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter .num').forEach(el => counterIO.observe(el));
 
-/* ===== 문의 폼 (데모) ===== */
+/* ---------- 내비 스크롤 효과 + 스크롤스파이 ---------- */
+const navEl = document.querySelector('nav');
+const links = [...document.querySelectorAll('.nav-menu a')];
+const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function onScroll(){
+  navEl.classList.toggle('scrolled', window.scrollY > 20);
+  const y = window.scrollY + 90;
+  let cur = sections[0];
+  for (const s of sections){ if (s.offsetTop <= y) cur = s; }
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + (cur && cur.id)));
+}
+window.addEventListener('scroll', onScroll, { passive:true });
+onScroll();
+
+/* ---------- 문의 폼 (데모) ---------- */
 document.getElementById('contactForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  alert('문의가 접수되었습니다 (데모)\n실제 전송은 연결되어 있지 않습니다.');
+  alert('문의가 접수되었습니다. (데모)\n실제 전송 기능은 연동이 필요합니다.');
   e.target.reset();
 });
 </script>
